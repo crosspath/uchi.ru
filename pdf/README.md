@@ -1,24 +1,16 @@
-# README
+# Микросервис для создания PDF
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Доступные операции:
+* `diploma?repo=<repo owner>/<repo name>&login=<user login>&name=<user name>` - сгенерировать PDF с информацией об участнике репозитория на GitHub
 
-Things you may want to cover:
+## Запуск
 
-* Ruby version
+`RAILS_ENV=development puma`
 
-* System dependencies
+## Примеры
 
-* Configuration
+Если запустить на локальной машине и обратиться к странице по адресу `localhost:3000/diploma?repo=crosspath/magnate&login=crosspath&name=Evgeniy+Nochevnov`, то сервис отправит результат в виде PDF-файла:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    Hello, Evgeniy Nochevnov!
+    You're one of the top contributors to repository crosspath/magnate
+    Your login is crosspath
