@@ -1,0 +1,7 @@
+<%= form_tag github_contributors_path, method: 'get' do %>
+  <p>Репозиторий (<em>пользователь/название</em>):</p>
+  <p><%= text_field_tag :repo %></p>
+  <p>Количество участников:</p>
+  <p><%= number_field_tag :count %></p>
+  <p><%= submit_tag 'Показать' %></p>
+<% end %>
