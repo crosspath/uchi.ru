@@ -1,6 +1,13 @@
-<p>Участники репозитория <%= @data[:repo] %>:</p>
-<% @contributors.each do |c| %>
-  <p><%= link_to "#{c['name']} (#{c['login']})",
-    github_diploma_path(repo: @data[:repo], login: c['login'], name: c['name'])
-  %></p>
+<% if @errors.empty? %>
+  <p>Участники репозитория <%= @data[:repo] %>:</p>
+  <% @contributors.each do |c| %>
+    <p><%= link_to "#{c['name']} (#{c['login']})",
+      github_diploma_path(repo: @data[:repo], login: c['login'], name: c['name'])
+    %></p>
+  <% end %>
+<% else %>
+  <p>Ошибки:</p>
+  <% @errors.each do |e| %>
+    <p><%= e.join(": ") %></p>
+  <% end %>
 <% end %>

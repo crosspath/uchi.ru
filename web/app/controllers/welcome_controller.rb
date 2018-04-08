@@ -14,9 +14,16 @@ class WelcomeController < ApplicationController
   def contributors
     hub_response = call_uri(:hub, "/#{@data[:repo]}/contributors/#{@data[:count]}")
     
+    @errors = []
     hub_json = JSON.parse(hub_response)
-    @contributors = hub_json['data']['nodes']
+    if hub_json['data'].is_a?(Hash) && hub_json['data']['nodes'].is_a?(Array)
+      @contributors = hub_json['data']['nodes']
+    else
+      @errors = hub_json['errors']
+    end
     # render welcome/contributors
+  rescue => e
+    @errors << [e.class.name, e.message]
   end
   
   def diploma
@@ -26,6 +33,9 @@ class WelcomeController < ApplicationController
       filename: "#{@data[:name]}.pdf",
       type: 'application/pdf',
       disposition: 'inline' # show in browser
+  rescue => e
+    @errors = [[e.class.name, e.message]]
+    render 'welcome/contributors'
   end
   
   protected
@@ -49,7 +59,6 @@ class WelcomeController < ApplicationController
   end
   
   def call_uri(service_key, uri)
-    puts uri
     service = Rails.application.config.services[service_key]
     Net::HTTP.get(service[0], uri, service[1]) # host, uri, port
   end
